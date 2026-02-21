@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Campus Live Feeds - EngEx 2025</title>
+  <style>
+    body { font-family: Arial, sans-serif; text-align: center; }
+    h1 { margin-top: 20px; }
+    img { border: 2px solid #333; margin-top: 20px; }
+    ul { list-style-type: none; padding: 0; display: flex; flex-wrap: wrap; justify-content: center; }
+    li { margin: 10px; }
+    a { text-decoration: none; color: #007BFF; }
+    a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+
+<h1>Campus Building Feeds - EngEx 2025</h1>
+
+<!-- Live feed of Building 1 (local camera) -->
+<h2>Live Stream - Building 1 (Local Camera)</h2>
+<img src="{{ url_for('video_feed', building_id='building_1') }}" width="720" height="540" alt="Live video stream EngEx 2025">
+
+<!-- Live feed of Building 2 (network camera) -->
+{% if 'building_2' in buildings %}
+<h2>Live Stream - Building 2 (Network Camera)</h2>
+<img src="{{ url_for('video_feed', building_id='building_2') }}" width="720" height="540" alt="Network camera feed">
+{% endif %}
+
+<!-- Links for other buildings -->
+<h2>Other Buildings</h2>
+<ul>
+  {% for b in buildings %}
+    {% if b not in ['building_1', 'building_2'] %}
+      <li>
+        <a href="{{ url_for('video_feed', building_id=b) }}" target="_blank">
+          {{ b | replace("_", " ") | title }}
+        </a>
+      </li>
+    {% endif %} 
+  {% endfor %}
+</ul>
+
+</body>
+</html>
